@@ -1,20 +1,19 @@
 import os
 import json
 import time
-from Utils import TcpDumpUtils
-from Utils import FlowManager
+from Core import TcpDumpUtils
+from Core import FlowManager
 from copy import deepcopy
 from Model import FusionModel, Dataset
 from PyQt5.QtCore import QThread, pyqtSignal, QObject
 
 
 class WorkThread(QThread, QObject):
-
     (NORMAL, WARNING, DANGEROUS) = (5, 2, 1)
     ATTACK = 'syn'
     trigger = pyqtSignal(dict)
 
-    def __init__(self, interface, datafile='./tmp/data.pcap'):
+    def __init__(self, interface='s3-eth1', datafile='./tmp/data.pcap'):
         super(WorkThread, self).__init__()
         self.model = FusionModel(pre_path="./Model/")
         self.__state = WorkThread.NORMAL
@@ -66,7 +65,7 @@ class WorkThread(QThread, QObject):
         self.__tdu.startWithTime(self.__state)
 
     def __getFeature(self):
-        os.system(f"sudo ./cic.sh {self.__dataFile} {self.__dataDir}")
+        os.system(f"sudo ./static/cic.sh {self.__dataFile} {self.__dataDir}")
 
     def __getIdWithIP(self, ip):
         return sum(list(map(int, ip.split('.'))))

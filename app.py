@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # coding=utf-8
 import sys
-from ui import Ui_MainWindow
+from GUI import Ui_MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtGui
-from Worker import WorkThread
+from Core import WorkThread
 from PyQt5.QtCore import QTimer, QDateTime
 from PyQt5.QtGui import QIcon
 
@@ -20,7 +20,7 @@ class ControlBoard(QMainWindow, Ui_MainWindow):
         timer.timeout.connect(self.__showtime)
         timer.start()
 
-        self.__sub_thread = WorkThread('s3-eth1')
+        self.__sub_thread = WorkThread()
 
         self.__run = False
 
@@ -63,6 +63,6 @@ class ControlBoard(QMainWindow, Ui_MainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     win = ControlBoard()
-    win.setWindowIcon(QIcon('myicon.svg'))
+    win.setWindowIcon(QIcon('./static/myicon.svg'))
     win.show()
     sys.exit(app.exec_())
