@@ -6,7 +6,6 @@ from mininet.topo import Topo
 class MyTopo(Topo):
 
     def __init__(self):
-
         # 初始化
         Topo.__init__(self)
 
@@ -29,9 +28,10 @@ class MyTopo(Topo):
         self.addLink(switch1, switch3)
         self.addLink(switch2, switch3)
         self.addLink(switch3, switch4)
-        
+
         self.addLink(switch4, host3)
         self.addLink(switch4, host4)
         self.addLink(switch4, host5)
+
 
 topos = {'mytopo': (lambda: MyTopo())}
